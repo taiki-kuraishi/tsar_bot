@@ -1,0 +1,17 @@
+services:
+  discord-bot:
+    image: discord-bot:latest
+    build:
+      context: .
+      target: development
+      dockerfile: ./docker/discord-bot/Dockerfile
+    volumes:
+      - ./discord-bot/src:/DiscordBot/discord-bot/src
+      - ./docker/discord-bot/requirements.txt:/DiscordBot/requirements.txt
+      - ./discord-bot/pyproject.toml:/DiscordBot/pyproject.toml
+      - ./.vscode/cspell.json:/DiscordBot/.vscode/cspell.json
+    env_file:
+      - ./discord-bot/.env
+    environment:
+      - PYTHONPATH=/DiscordBot/discord-bot/src
+    tty: true

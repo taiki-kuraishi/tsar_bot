@@ -1,0 +1,22 @@
+name: Label Sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/labels.json
+
+jobs:
+  label-sync:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+
+    - name: Install dependencies
+      run: npm install --save-dev @azu/github-label-setup
+
+    - name: update label
+      run: npx github-label-setup --token ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_LABELS }} --labels .github/labels.json

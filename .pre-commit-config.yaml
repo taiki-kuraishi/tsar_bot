@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: docker-build
+        name: docker-build
+        entry: sh -c 'docker-compose build'
+        language: system
+        pass_filenames: false
+        stages: [commit]
+
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: sh -c 'docker-compose exec -T discord-bot ruff check --fix'
+        language: system
+        types: [python]
+        stages: [commit]
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: sh -c 'docker-compose exec -T discord-bot mypy ./discord-bot'
+        language: system
+        types: [python]
+        stages: [commit]

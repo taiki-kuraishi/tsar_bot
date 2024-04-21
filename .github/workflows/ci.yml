@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install docker-compose
+        if: ${{ env.ACT }}
+        run: |
+          apt-get update && apt-get install -y docker docker-compose
+
+      - uses: arduino/setup-task@v1
+
+      - name: Run task setup
+        run: task setup
+
+      - name: docker build
+        run: docker-compose build
+
+      - name: docker up
+        run: docker-compose up -d
+
+      - uses: pre-commit/action@v3.0.0
+
+      - name: Run task test
+        run: task test

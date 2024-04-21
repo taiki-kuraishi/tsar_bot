@@ -1,0 +1,24 @@
+{
+    "name": "discord-bot",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "discord-bot",
+    "workspaceFolder": "/DiscordBot",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/sh",
+                "dev.containers.copyGitConfig": true
+            },
+            "extensions": [
+                "ms-python.black-formatter",
+                "ms-python.isort",
+                "ms-python.mypy-type-checker",
+                "ms-python.pylint",
+                "ms-python.vscode-pylance",
+                "streetsidesoftware.code-spell-checker",
+                "tamasfe.even-better-toml"
+            ]
+        }
+    },
+    "shutdownAction": "stopCompose"
+}

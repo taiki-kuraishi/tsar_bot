@@ -1,0 +1,13 @@
+version: "3"
+
+tasks:
+  setup:
+    dir: .
+    cmds:
+      - if [ ! -f .act.secrets ]; then cp .act.secrets.example .act.secrets ; fi
+      - if [ ! -f discord-bot/.env ]; then cp discord-bot/.env.example discord-bot/.env ; fi
+
+  test:
+    cmds:
+      - docker-compose exec -T discord-bot ruff check --fix
+      - docker-compose exec -T discord-bot mypy ./discord-bot
